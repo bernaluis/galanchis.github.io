@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GALANCHIS - Handmade Marketplace</title>
+    <link rel="icon" href="img/icon.png" type="image/x-icon"/>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-green-200">
+    <nav class="bg-white shadow-md">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between">
+                <div class="flex space-x-7">
+                    <div>
+                        <!-- Logo -->
+                        <a href="#" class="flex items-center py-4 px-2">
+                            <img src="img/icon.png" alt="GALANCHIS logo" class="h-8 w-8 mr-2">
+                            <span class="font-semibold text-gray-500 text-lg">GALANCHIS</span>
+                        </a>
+                    </div>
+                    <!-- Navbar items -->
+                    <div class="hidden md:flex items-center space-x-1">
+                        <a href="main.html" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Inicio</a>
+                        <a href="marketplace.html" class=" py-4 px-2 text-green-500 border-b-4 border-green-500 font-semibold">Tienda</a>
+                        <a href="community.html" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Comunidad</a>
+                        <a href="about.html" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Sobre Nosotros</a>
+                    </div>
+                </div>
+                <!-- Log In Buttons -->
+                <div class="hidden md:flex items-center space-x-3 ">
+                    <a href="login.html" class="py-2 px-2 font-medium text-gray-500 rounded hover:bg-green-500 hover:text-white transition duration-300">Inicia Sesion</a>
+                    <a href="#" class="py-2 px-2 font-medium text-white bg-green-500 rounded hover:bg-green-400 transition duration-300">Registrate</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex max-w-6xl mx-auto pt-8 pb-16">
+        <!-- Filters -->
+        <div class="w-1/4 pr-4">
+            <div class="bg-white rounded-lg shadow-lg p-4 mb-4">
+                <h2 class="text-xl font-semibold mb-4">Filtrar por Precio</h2>
+                <!-- Price filter content -->
+            </div>
+            <div class="bg-white rounded-lg shadow-lg p-4 mb-4">
+                <h2 class="text-xl font-semibold mb-4">Filtrar por Tipo de Producto</h2>
+                <!-- Product type filter content -->
+            </div>
+        </div>
+        
+        <!-- Products -->
+        <div class="w-3/4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Product 1 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg">
+                    <!-- Product image -->
+                    <div class="h-64">
+                        <img src="https://placehold.co/300x300" alt="Product 1" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Product details -->
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-2">Product Name</h3>
+                        <p class="text-gray-600 mb-4">Product description goes here.</p>
+                        <a class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" href="product_details.html">Ver Detalle</a>
+                    </div>
+                </div>
+                <!-- Product 2 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg">
+                    <!-- Product image -->
+                    <div class="h-64">
+                        <img src="https://placehold.co/300x300" alt="Product 2" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Product details -->
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-2">Product Name</h3>
+                        <p class="text-gray-600 mb-4">Product description goes here.</p>
+                        <a class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" href="product_details.html">Ver Detalle</a>
+                    </div>
+                </div>
+                <!-- Product 3 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg">
+                    <!-- Product image -->
+                    <div class="h-64">
+                        <img src="https://placehold.co/300x300" alt="Product 3" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Product details -->
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-2">Product Name</h3>
+                        <p class="text-gray-600 mb-4">Product description goes here.</p>
+                        <a class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" href="product_details.html">Ver Detalle</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white shadow-inner">
+        <div class="max-w-6xl mx-auto px-4 py-6">
+            <div class="flex justify-between">
+                <p class="text-gray-700">© 2024 GALANCHIS Marketplace. Todos los derechos reservados.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-700 hover:text-green-500 transition duration-300">Terminos de Servicio</a>
+                    <a href="#" class="text-gray-700 hover:text-green-500 transition duration-300">Politica de Privacidad</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
