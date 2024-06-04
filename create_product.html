@@ -71,20 +71,33 @@
                 </div>
                 <div class="col-span-3 flex flex-col">
                     <div class="bg-white p-4 rounded shadow">
-                        <h2 class="text-lg font-semibold mb-2">Diseña tu pulsera</h2>
-                        <p class="mb-4">Escoge el color:</p>
+                        <h2 class="text-lg font-semibold mb-2">Diseña</h2>
+                        <p class="mb-4">Tipo de articulo:</p>
+                        <select id="itemSelector" class="mb-4 p-2 border rounded">
+                            <option value="bracelet">Pulsera</option>
+                            <option value="ring">Anillo</option>
+                            <option value="necklace">Collar</option>
+                        </select>
+                        <p class="mb-4">Color del articulo:</p>
                         <div class="flex space-x-2 mb-4">
                             <button id="colorRed" class="px-4 py-2 bg-red-500 text-white rounded">Rojo</button>
                             <button id="colorGreen" class="px-4 py-2 bg-green-500 text-white rounded">Verde</button>
                             <button id="colorBlue" class="px-4 py-2 bg-blue-500 text-white rounded">Azul</button>
                         </div>
-                        <p class="mb-4">Ajusta el grosor de la pieza:</p>
+                        <p class="mb-4">Textura:</p>
+                        <div class="flex space-x-2 mb-4">
+                            <button id="textureGold" class="px-4 py-2 bg-yellow-500 text-white rounded">Detallado</button>
+                            <button id="textureSilver" class="px-4 py-2 bg-gray-500 text-white rounded">Liso</button>
+                            <button id="textureWood" class="px-4 py-2 bg-brown-500 text-white rounded">Marcado</button>
+                        </div>
+                        <p id="widthLabel" class="mb-4">Grosor de la pulsera:</p>
                         <input type="range" id="widthSlider" min="0.1" max="1.0" step="0.1" value="0.3" class="mb-4">
                         <button id="placeOrder" class="px-4 py-2 bg-indigo-500 text-white rounded">Enviar Orden</button>
                     </div>
                 </div>
             </div>
         </div>
+        
     </main>
 
     <footer class="bg-white shadow-inner">
@@ -111,10 +124,10 @@
 
         // Initial bracelet geometry (realistic torus)
         let braceletWidth = 0.3;
-        const geometry = new THREE.TorusGeometry(1, braceletWidth, 16, 100);
         const material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
-        let bracelet = new THREE.Mesh(geometry, material);
-        scene.add(bracelet);
+        let geometry = new THREE.TorusGeometry(1, braceletWidth, 16, 100);
+        let jewelry = new THREE.Mesh(geometry, material);
+        scene.add(jewelry);
 
         // Lighting
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -136,34 +149,85 @@
         // Animation loop
         function animate() {
             requestAnimationFrame(animate);
-            bracelet.rotation.x += 0.01;
-            bracelet.rotation.y += 0.01;
+            jewelry.rotation.x += 0.01;
+            jewelry.rotation.y += 0.01;
             renderer.render(scene, camera);
         }
         animate();
 
         // Color change functionality
         document.getElementById('colorRed').addEventListener('click', () => {
-            bracelet.material.color.set(0xff0000);
+            jewelry.material.color.set(0xff0000);
         });
         document.getElementById('colorGreen').addEventListener('click', () => {
-            bracelet.material.color.set(0x00ff00);
+            jewelry.material.color.set(0x00ff00);
         });
         document.getElementById('colorBlue').addEventListener('click', () => {
-            bracelet.material.color.set(0x0000ff);
+            jewelry.material.color.set(0x0000ff);
         });
 
-        // Width change functionality
+        // Texture change functionality
+        const textureLoader = new THREE.TextureLoader();
+        document.getElementById('textureGold').addEventListener('click', () => {
+            const texture = textureLoader.load('https://threejsfundamentals.org/threejs/resources/images/wall.jpg');
+            jewelry.material.map = texture;
+            jewelry.material.needsUpdate = true;
+        });
+        document.getElementById('textureSilver').addEventListener('click', () => {
+            const texture = textureLoader.load('https://threejsfundamentals.org/threejs/resources/images/checker.png');
+            jewelry.material.map = texture;
+            jewelry.material.needsUpdate = true;
+        });
+        document.getElementById('textureWood').addEventListener('click', () => {
+            const texture = textureLoader.load('https://threejsfundamentals.org/threejs/resources/images/flower-1.jpg');
+            jewelry.material.map = texture;
+            jewelry.material.needsUpdate = true;
+        });
+
+        // Width change functionality for bracelet
         document.getElementById('widthSlider').addEventListener('input', (event) => {
             const newWidth = parseFloat(event.target.value);
-            const newGeometry = new THREE.TorusGeometry(1, newWidth, 16, 100);
-            bracelet.geometry.dispose(); // Dispose old geometry
-            bracelet.geometry = newGeometry;
+            geometry = new THREE.TorusGeometry(1, newWidth, 16, 100);
+            jewelry.geometry.dispose(); // Dispose old geometry
+            jewelry.geometry = geometry;
+        });
+
+        // Item selection functionality
+        document.getElementById('itemSelector').addEventListener('change', (event) => {
+            const selectedItem = event.target.value;
+            scene.remove(jewelry);
+
+            switch (selectedItem) {
+                case 'bracelet':
+                    braceletWidth = parseFloat(document.getElementById('widthSlider').value);
+                    geometry = new THREE.TorusGeometry(1, braceletWidth, 16, 100);
+                    document.getElementById('widthSlider').style.display = 'block';
+                    document.getElementById('widthLabel').style.display = 'block';
+                    break;
+                case 'ring':
+                    geometry = new THREE.TorusGeometry(0.5, 0.1, 16, 100);
+                    document.getElementById('widthSlider').style.display = 'none';
+                    document.getElementById('widthLabel').style.display = 'none';
+                    break;
+                case 'necklace':
+                    // Create an oval shape by setting different radii for the torus
+                    const ovalRadiusX = 1.5; // X radius
+                    const ovalRadiusY = 1;   // Y radius
+                    const ovalTube = 0.05;   // Tube (thickness)
+                    geometry = new THREE.TorusGeometry(ovalRadiusX, ovalTube, 16, 100);
+                    jewelry.position.set(0, 0, 0); // Adjust position if needed
+                    document.getElementById('widthSlider').style.display = 'none';
+                    document.getElementById('widthLabel').style.display = 'none';
+                    break;
+            }
+
+            jewelry = new THREE.Mesh(geometry, material);
+            scene.add(jewelry);
         });
 
         // Place order functionality
         document.getElementById('placeOrder').addEventListener('click', () => {
-            alert(`Orden para una pulsera enviada con el color: ${bracelet.material.color.getHexString()} y ancho: ${bracelet.geometry.parameters.tube}`);
+            alert(`Orden creada para item ${document.getElementById('itemSelector').value} con color: ${jewelry.material.color.getHexString()} y ancho: ${jewelry.geometry.parameters.tube}`);
         });
     </script>
 </body>
